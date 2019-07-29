@@ -39,7 +39,7 @@ class MainHandler(webapp2.RequestHandler):
         if get_user_email():
             profile = playerdata.load_user_profile(get_user_email())
             # values['firstName'] = profile.firstName
-        render_template(self, 'pinballlogin.html', values)
+        render_template(self, 'pinballhomepage.html', values)
 
 
 class LeaderboardHandler(webapp2.RequestHandler):
@@ -49,7 +49,7 @@ class LeaderboardHandler(webapp2.RequestHandler):
             profile = playerdata.load_user_profile(get_user_email())
             values['firstName'] = profile.firstName
             values['score'] = profile.score
-        render_template(self, "leaderboard.html", values)
+        render_template(self, 'pinballhomepage.html', values)
 
 
 class CreateUserHandler(webapp2.RequestHandler):
@@ -86,7 +86,7 @@ class CreateUserHandler(webapp2.RequestHandler):
                 playerdata.save_profile(
                     email, firstName, lastName, email, password, score)
                 values['successmsg'] = 'Everything worked out fine.'
-            render_template(self, 'leaderboard.html', values)
+            render_template(self, 'pinballhomepage.html', values)
 
 
 app = webapp2.WSGIApplication([
