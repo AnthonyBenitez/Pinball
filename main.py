@@ -1,9 +1,9 @@
 import os
 import webapp2
-import playermodels
+# import playermodels
 import playerdata
 
-from google.appengine.ext import users
+from google.appengine.api import users
 from google.appengine.ext.webapp import template
 
 
@@ -15,9 +15,13 @@ def render_template(handler, file_name, template_values):
 def get_user_email():
     user = users.get_current_user()
     if user:
+        nickname = user.nickname()
+        logout_url = users.create_logout_url('/')
+        greeting = 'Welcome {}! Are you ready to win the pin? (<a href = "{}"> sign out </a>)'.format(nickname, logout_url)
         return user.email()
     else:
-        return None
+        login_url = users.create_login_url('/')
+        greeting = 'Welcome! <a href="{}">Sign in</a>'.format(login_url)
 
 
 def get_template_parameters():
@@ -34,8 +38,8 @@ class MainHandler(webapp2.RequestHandler):
         values = get_template_parameters()
         if get_user_email():
             profile = playerdata.load_user_profile(get_user_email())
-            values['name'] = profile.name
-        render_template(self, 'mainpage.html', values)
+            # values['firstName'] = profile.firstName
+        render_template(self, 'pinballlogin.html', values)
 
 
 class LeaderboardHandler(webapp2.RequestHandler):
@@ -43,7 +47,7 @@ class LeaderboardHandler(webapp2.RequestHandler):
         values = get_template_parameters()
         if get_user_email():
             profile = playerdata.load_user_profile(get_user_email())
-            values['firstname'] = profile.firstName
+            values['firstName'] = profile.firstName
             values['score'] = profile.score
         render_template(self, "leaderboard.html", values)
 
@@ -77,15 +81,15 @@ class CreateUserHandler(webapp2.RequestHandler):
             values['password'] = password
             values['score'] = score
             if error_text:
-               values['errormsg'] = error_text
+                values['errormsg'] = error_text
             else:
                 playerdata.save_profile(
                     email, firstName, lastName, email, password, score)
                 values['successmsg'] = 'Everything worked out fine.'
-            render_template(self, 'profile-edit.html', values)
+            render_template(self, 'leaderboard.html', values)
 
 
-app = webapp2.WSGIApplication(
-    ('/sp', ),
-    # ('.*', LeaderboardHandler)
-)
+app = webapp2.WSGIApplication([
+    ('/lb', LeaderboardHandler),
+    ('.*', MainHandler)
+])

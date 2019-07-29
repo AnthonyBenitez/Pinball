@@ -13,12 +13,13 @@ def save_profile(first, last, email, password, retypePassword):
 
     if not p:
         p = PlayerModel(
-            firstName=first, lastName=last, email=email, password=password, retypePassword=retypePassword, score=0)
+            firstName=first, lastName=last, email=email, password=password,
+            retypePassword=retypePassword, score=0)
     p.put()
 
 
-def get_user(name):
-    q = PlayerModel.query(PlayerModel.name == name)
+def get_user(firstName):
+    q = PlayerModel.query(PlayerModel.firstName == firstName)
     results = q.fetch(1)
     for profile in results:
         return profile
@@ -30,7 +31,7 @@ def load_user_profile(email):
     users = q.fetch(1)
     for profile in users:
         return profile
-    return
+    return None
 
 
 def ranking(top):
