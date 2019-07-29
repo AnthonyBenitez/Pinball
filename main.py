@@ -38,6 +38,18 @@ class MainHandler(webapp2.RequestHandler):
         render_template(self, 'mainpage.html', values)
 
 
+class LeaderboardHandler(webapp2.RequestHandler):
+    def get(self):
+        values = get_template_parameters()
+        if get_user_email():
+            profile = playerdata.load_user_profile(get_user_email())
+            values['firstname'] = profile.firstName
+            values['score'] = profile.score
+        render_template(self, "leaderboard.html", values)
+
+
+
+
 app = webapp2.WSGIApplication(
     ('/sp', ),
     ('.*', LeaderboardHandler)

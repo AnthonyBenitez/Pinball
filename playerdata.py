@@ -23,3 +23,17 @@ def get_user(name):
     for profile in results:
         return profile
     return None
+
+
+def load_user_profile(email):
+    q = PlayerModel.query(PlayerModel.email == email)
+    users = q.fetch(1)
+    for profile in users:
+        return profile
+    return
+
+
+def ranking(top):
+    q = PlayerModel.query().order(-PlayerModel.score)
+    results = q.fetch(top)
+    return results
