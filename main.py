@@ -1,4 +1,4 @@
-import os 
+import os
 import webapp2
 import playermodels
 import playerdata
@@ -38,7 +38,44 @@ class MainHandler(webapp2.RequestHandler):
         render_template(self, 'mainpage.html', values)
 
 
+class CreateUserHandler(webapp2.RequestHandler):
+    def post(self):
+        email = get_user_email()
+        if not email:
+            self.redirect('/')
+        else:
+            error_text = ''
+            firstName = self.request.get('firstName')
+            lastName = self.request.get('lastName')
+            email = self.request.get('email')
+            password = self.request.get('password')
+            score = self.request.get('score')
+            playerdata.save_profile(
+                firstName, lastName, email, password, score)
+            self.redirect('/profile-edit')
+
+            if len(firstName) < 2:
+                error_text += 'Name should be at least 2 characters.\n'
+            if len(firstName) > 50:
+                error_text += 'Name should be no more than 50 characters.\n'
+            if len(firstName.split()) > 1:
+                error_text += 'Name should not have whitespace.\n'
+            values = get_template_parameters()
+            values['firstName'] = firstName
+            values['lastName'] = lastName
+            values['email'] = email
+            values['password'] = password
+            values['score'] = score
+            if error_text:
+               values['errormsg'] = error_text
+            else:
+                playerdata.save_profile(
+                    email, firstName, lastName, email, password, score)
+                values['successmsg'] = 'Everything worked out fine.'
+            render_template(self, 'profile-edit.html', values)
+
+
 app = webapp2.WSGIApplication(
     ('/sp', ),
-    ('.*', LeaderboardHandler)
+    # ('.*', LeaderboardHandler)
 )
