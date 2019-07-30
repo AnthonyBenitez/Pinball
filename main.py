@@ -2,15 +2,15 @@ import os
 import webapp2
 import playermodels
 import playerdata
-#import bracketMain
-import bracket
-#import BracketMaker
+# import bracketMain
+# import bracket
+# import BracketMaker
 
 from google.appengine.api import users
 from google.appengine.ext.webapp import template
 
 
-bracket.run()
+# bracket.run()
 
 def render_template(handler, file_name, template_values):
     path = os.path.join(os.path.dirname(__file__), 'templates/', file_name)
@@ -22,11 +22,12 @@ def get_user_email():
     if user:
         nickname = user.nickname()
         logout_url = users.create_logout_url('/')
-        greeting = 'Welcome {}! Are you ready to win the pin? (<a href = "{}"> sign out </a>)'.format(nickname, logout_url)
+        # greeting = 'Welcome {}! Are you ready to win the pin? (<a href = "{}"> sign out </a>)'.format(nickname, logout_url)
         return user.email()
     else:
         login_url = users.create_login_url('/')
-        greeting = 'Welcome! <a href="{}">Sign in</a>'.format(login_url)
+        # greeting = 'Welcome! <a href="{}">Sign in</a>'.format(login_url)
+        return None
 
 
 def get_template_parameters():
