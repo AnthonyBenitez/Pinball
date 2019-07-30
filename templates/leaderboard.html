@@ -1,0 +1,18 @@
+<html>
+    <head> 
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+<div id="container">
+
+{{results = ranking(10)}}
+{% for result in results %}
+    <div class="row">
+        <div class="name">{{result.firstName}}</div><div class="score">{{result.score}}</div>
+    </div>
+
+{% endfor %}
+
+</div>
+</body>
+</html>
