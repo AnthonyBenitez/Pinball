@@ -2,10 +2,15 @@ import os
 import webapp2
 import playermodels
 import playerdata
+import bracketMain
+import bracket
+# import BracketMaker
 
 from google.appengine.api import users
 from google.appengine.ext.webapp import template
 
+
+bracket.run()
 
 def render_template(handler, file_name, template_values):
     path = os.path.join(os.path.dirname(__file__), 'templates/', file_name)
@@ -100,7 +105,6 @@ class FakeDataHandler(webapp2.RequestHandler):
         p3 = playermodels.PlayerModel(firstName="John", lastName="Homie", email="johnny@gmail.com", score=888888888)
         p3.put()
         self.response.out.write('successfully seeded data!')
-
 
 
 app = webapp2.WSGIApplication([
