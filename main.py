@@ -90,6 +90,7 @@ class CreateUserHandler(webapp2.RequestHandler):
 
 
 app = webapp2.WSGIApplication([
-    ('/lb', LeaderboardHandler),
+    ('/p/(.*)', CreateUserHandler),
+    ('/leaderboard', LeaderboardHandler),
     ('.*', MainHandler)
 ])

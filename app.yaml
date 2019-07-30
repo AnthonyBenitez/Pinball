@@ -8,6 +8,10 @@ handlers:
 #  upload: favicon\.ico
 
 #new handlers should go ABOVE the catch all url (.*)
+- url: /i
+  static_dir: static 
+  
+
 - url: .*
   script: main.app
   
