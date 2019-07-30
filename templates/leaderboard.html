@@ -1,6 +1,6 @@
 <html>
     <head> 
-        <link rel="stylesheet" href="leaderboard.css">
+        <link rel="stylesheet" href="/i/leaderboard.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
@@ -19,8 +19,9 @@ function myFunction(x) {
        <center> <h1 id="title">LEADERBOARDS </h1> </center>
 <div id="container2">
 <ol>
-{{results = ranking(10)}}
-{% for result in results %}
+
+
+{% for result in ranking %}
     <li>
     <div class="row">
         <div class="name">{{result.firstName}}</div>      <div class="score">{{result.score}}</div>

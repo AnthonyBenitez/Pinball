@@ -23,7 +23,8 @@ def get_user_email():
         nickname = user.nickname()
         logout_url = users.create_logout_url('/')
         # greeting = 'Welcome {}! Are you ready to win the pin? (<a href = "{}"> sign out </a>)'.format(nickname, logout_url)
-        return user.email()
+        return "example@google.com"
+        #return user.email()
     else:
         login_url = users.create_login_url('/')
         # greeting = 'Welcome! <a href="{}">Sign in</a>'.format(login_url)
@@ -54,8 +55,9 @@ class LeaderboardHandler(webapp2.RequestHandler):
         if get_user_email():
             profile = playerdata.load_user_profile(get_user_email())
             values['firstName'] = profile.firstName
+            values['ranking'] = playerdata.ranking(10)
             values['score'] = profile.score
-        render_template(self, 'pinballhomepage.html', values)
+        render_template(self, 'leaderboard.html', values)
 
 
 class CreateUserHandler(webapp2.RequestHandler):
@@ -111,6 +113,6 @@ class FakeDataHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/p/(.*)', CreateUserHandler),
     ('/leaderboard', LeaderboardHandler),
-    ('fake', FakeDataHandler),
+    ('/fake', FakeDataHandler),
     ('.*', MainHandler)
 ])

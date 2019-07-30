@@ -31,7 +31,7 @@ def load_user_profile(email):
     users = q.fetch(1)
     for profile in users:
         return profile
-    return None
+    return PlayerModel(firstName="", lastName="", email="", score=0)
 
 
 def ranking(top):
