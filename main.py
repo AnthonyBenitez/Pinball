@@ -28,7 +28,7 @@ def get_user_email():
     else:
         login_url = users.create_login_url('/')
         # greeting = 'Welcome! <a href="{}">Sign in</a>'.format(login_url)
-        return None
+        return "User does not exist"
 
 
 def get_template_parameters():

@@ -11,6 +11,10 @@ handlers:
 - url: /i
   static_dir: static 
   
+- url: p/.*
+  script: main.app
+  login: required
+
 
 - url: .*
   script: main.app
