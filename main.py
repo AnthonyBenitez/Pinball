@@ -1,6 +1,6 @@
 import os
 import webapp2
-# import playermodels
+import playermodels
 import playerdata
 
 from google.appengine.api import users
@@ -89,8 +89,23 @@ class CreateUserHandler(webapp2.RequestHandler):
             render_template(self, 'pinballhomepage.html', values)
 
 
+class FakeDataHandler(webapp2.RequestHandler):
+    def get(self):
+        p1 = playermodels.PlayerModel(firstName="Anthony", lastName="Benitez", email="tony20882@gmail.com", score=10000000)
+        p1.put()
+        p2 = playermodels.PlayerModel(firstName="Langston", lastName="Luck", email="langstonluck@gmail.com", score=777777)
+        p2.put()
+        p3 = playermodels.PlayerModel(firstName="Benithan", lastName="Pinball", email="pinballben@gmail.com", score=999999999)
+        p3.put()
+        p3 = playermodels.PlayerModel(firstName="John", lastName="Homie", email="johnny@gmail.com", score=888888888)
+        p3.put()
+        self.response.out.write('successfully seeded data!')
+
+
+
 app = webapp2.WSGIApplication([
     ('/p/(.*)', CreateUserHandler),
     ('/leaderboard', LeaderboardHandler),
+    ('fake', FakeDataHandler),
     ('.*', MainHandler)
 ])
