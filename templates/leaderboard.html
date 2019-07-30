@@ -1,10 +1,23 @@
 <html>
     <head> 
         <link rel="stylesheet" href="leaderboard.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <h1 id="title">LEADERBOARDS</h1>
-<div id="container">
+        <div class="container" onclick="myFunction(this)">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+
+<script>
+function myFunction(x) {
+  x.classList.toggle("change");
+}
+</script>
+
+       <center> <h1 id="title">LEADERBOARDS </h1> </center>
+<div id="container2">
 <ol>
 {{results = ranking(10)}}
 {% for result in results %}
