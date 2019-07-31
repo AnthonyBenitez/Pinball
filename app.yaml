@@ -10,15 +10,13 @@ handlers:
 #new handlers should go ABOVE the catch all url (.*)
 - url: /i
   static_dir: static 
-  
-- url: p/.*
+
+- url: /p/(.*)
   script: main.app
   login: required
 
-
 - url: .*
   script: main.app
-  
 
 libraries:
 - name: webapp2
