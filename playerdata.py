@@ -1,7 +1,7 @@
 from playermodels import PlayerModel
 
 
-def save_profile(first, last, email, password, retypePassword):
+def save_profile(first, last, email, password, retypePassword, score, machine):
     p = get_user(first)
     if p:
         p.firstName = first
@@ -10,11 +10,12 @@ def save_profile(first, last, email, password, retypePassword):
         p.password = password
         p.retypePassword = retypePassword
         p.score = 0
+        p.machine = machine
 
     if not p:
         p = PlayerModel(
             firstName=first, lastName=last, email=email, password=password,
-            retypePassword=retypePassword, score=0)
+            retypePassword=retypePassword, score=0, machine=machine)
     p.put()
 
 
@@ -31,7 +32,7 @@ def load_user_profile(email):
     users = q.fetch(1)
     for profile in users:
         return profile
-    return PlayerModel(firstName="", lastName="", email="", score=0)
+    return PlayerModel(firstName="", lastName="", email="", score=0, machine='')
 
 
 def ranking(top):

@@ -6,4 +6,4 @@ class PlayerModel(ndb.Model):
     lastName = ndb.StringProperty()
     email = ndb.StringProperty()
     score = ndb.IntegerProperty()
-
+    machine = ndb.StringProperty()

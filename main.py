@@ -57,6 +57,7 @@ class LeaderboardHandler(webapp2.RequestHandler):
             values['firstName'] = profile.firstName
             values['ranking'] = playerdata.ranking(10)
             values['score'] = profile.score
+            values['machine'] = profile.machine
         render_template(self, 'leaderboard.html', values)
 
 
@@ -72,8 +73,9 @@ class CreateUserHandler(webapp2.RequestHandler):
             email = self.request.get('email')
             password = self.request.get('password')
             score = self.request.get('score')
+            machine = self.request.get('machine')
             playerdata.save_profile(
-                firstName, lastName, email, password, score)
+                firstName, lastName, email, password, score, machine)
             self.redirect('/profile-edit')
 
             if len(firstName) < 2:
@@ -88,11 +90,12 @@ class CreateUserHandler(webapp2.RequestHandler):
             values['email'] = email
             values['password'] = password
             values['score'] = score
+            values['machine'] = machine
             if error_text:
                 values['errormsg'] = error_text
             else:
                 playerdata.save_profile(
-                    email, firstName, lastName, email, password, score)
+                    email, firstName, lastName, email, password, score, machine)
                 values['successmsg'] = 'Everything worked out fine.'
             render_template(self, 'pinballhomepage.html', values)
 
@@ -100,16 +103,16 @@ class CreateUserHandler(webapp2.RequestHandler):
 class FakeDataHandler(webapp2.RequestHandler):
     def get(self):
         p1 = playermodels.PlayerModel(firstName="Anthony", lastName="Benitez",
-         email="tony20882@gmail.com", score=10000000)
+         email="tony20882@gmail.com", score=10000000, machine = 'terminator 3')
         p1.put()
         p2 = playermodels.PlayerModel(firstName="Langston", lastName="Luck",
-         email="langstonluck@gmail.com", score=777777)
+         email="langstonluck@gmail.com", score=777777, machine = 'terminator 3')
         p2.put()
         p3 = playermodels.PlayerModel(firstName="Benithan", lastName="Pinball",
-         email="pinballben@gmail.com", score=999999999)
+         email="pinballben@gmail.com", score=999999999, machine = 'terminator 3')
         p3.put()
         p3 = playermodels.PlayerModel(firstName="John", lastName="Homie",
-         email="johnny@gmail.com", score=888888888)
+         email="johnny@gmail.com", score=888888888, machine = 'terminator 3')
         p3.put()
         self.response.out.write('successfully seeded data!')
 
