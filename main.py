@@ -49,7 +49,7 @@ class MainHandler(webapp2.RequestHandler):
         render_template(self, 'pinballhomepage.html', values)
 
 
-class LeaderboardHandler(webapp2.RequestHandler):
+class TermLeaderboardHandler(webapp2.RequestHandler):
     def get(self):
         values = get_template_parameters()
         if get_user_email():
@@ -58,7 +58,31 @@ class LeaderboardHandler(webapp2.RequestHandler):
             values['ranking'] = playerdata.ranking(10, 'terminator 3')
             values['score'] = profile.score
             values['machine'] = profile.machine
-        render_template(self, 'leaderboard.html', values)
+        render_template(self, 'terminatorLeaderboard.html', values)
+
+
+class gotLeaderboardHandler(webapp2.RequestHandler):
+    def get(self):
+        values = get_template_parameters()
+        if get_user_email():
+            profile = playerdata.load_user_profile(get_user_email())
+            values['firstName'] = profile.firstName
+            values['ranking'] = playerdata.ranking(10, 'game of thrones')
+            values['score'] = profile.score
+            values['machine'] = profile.machine
+        render_template(self, 'gotLeaderboard.html', values)
+
+
+class adamLeaderboardHandler(webapp2.RequestHandler):
+    def get(self):
+        values = get_template_parameters()
+        if get_user_email():
+            profile = playerdata.load_user_profile(get_user_email())
+            values['firstName'] = profile.firstName
+            values['ranking'] = playerdata.ranking(10, 'adams family')
+            values['score'] = profile.score
+            values['machine'] = profile.machine
+        render_template(self, 'adamsLeaderboard.html', values)
 
 
 class CreateUserHandler(webapp2.RequestHandler):
@@ -122,7 +146,9 @@ class FakeDataHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/p/(.*)', CreateUserHandler),
-    ('/leaderboard', LeaderboardHandler),
+    ('/termleaderboard', TermLeaderboardHandler),
+    ('/adamleaderboard', adamLeaderboardHandler),
+    ('/gotleaderboard', gotLeaderboardHandler),
     ('/fake', FakeDataHandler),
     ('.*', MainHandler)
 ])
