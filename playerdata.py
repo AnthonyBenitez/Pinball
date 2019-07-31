@@ -35,7 +35,7 @@ def load_user_profile(email):
     return PlayerModel(firstName="", lastName="", email="", score=0, machine='')
 
 
-def ranking(top):
-    q = PlayerModel.query().order(-PlayerModel.score)
+def ranking(top, machine):
+    q = PlayerModel.query(PlayerModel.machine == machine).order(-PlayerModel.score)
     results = q.fetch(top)
     return results

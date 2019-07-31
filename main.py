@@ -55,7 +55,7 @@ class LeaderboardHandler(webapp2.RequestHandler):
         if get_user_email():
             profile = playerdata.load_user_profile(get_user_email())
             values['firstName'] = profile.firstName
-            values['ranking'] = playerdata.ranking(10)
+            values['ranking'] = playerdata.ranking(10, 'terminator 3')
             values['score'] = profile.score
             values['machine'] = profile.machine
         render_template(self, 'leaderboard.html', values)
@@ -114,6 +114,9 @@ class FakeDataHandler(webapp2.RequestHandler):
         p3 = playermodels.PlayerModel(firstName="John", lastName="Homie",
          email="johnny@gmail.com", score=888888888, machine = 'terminator 3')
         p3.put()
+        p4 = playermodels.PlayerModel(firstName="Dude", lastName="Homie",
+         email="dude@gmail.com", score=75, machine = 'game of thrones')
+        p4.put()
         self.response.out.write('successfully seeded data!')
 
 
