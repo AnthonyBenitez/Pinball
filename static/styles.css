@@ -1,5 +1,5 @@
 body {
-   background-color:whitesmoke
+   background-color:whitesmoke;
 }
  
  
@@ -21,7 +21,7 @@ h1  {
 }
  
 .newuser:hover {
-   color: violet
+   color: violet;
  
 }
  
