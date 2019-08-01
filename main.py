@@ -58,6 +58,7 @@ class TermLeaderboardHandler(webapp2.RequestHandler):
             values['ranking'] = playerdata.ranking(10, 'terminator 3')
             values['score'] = profile.score
             values['machine'] = profile.machine
+            values['invalidated'] = profile.invalidated
         render_template(self, 'terminatorLeaderboard.html', values)
 
 
@@ -70,6 +71,7 @@ class gotLeaderboardHandler(webapp2.RequestHandler):
             values['ranking'] = playerdata.ranking(10, 'game of thrones')
             values['score'] = profile.score
             values['machine'] = profile.machine
+            values['invalidated'] = profile.invalidated
         render_template(self, 'gotLeaderboard.html', values)
 
 
@@ -82,6 +84,7 @@ class adamLeaderboardHandler(webapp2.RequestHandler):
             values['ranking'] = playerdata.ranking(10, 'adams family')
             values['score'] = profile.score
             values['machine'] = profile.machine
+            values['invalidated'] = profile.invalidated
         render_template(self, 'adamsLeaderboard.html', values)
 
 
@@ -98,8 +101,9 @@ class CreateUserHandler(webapp2.RequestHandler):
             password = self.request.get('password')
             score = self.request.get('score')
             machine = self.request.get('machine')
+            invalidated = self.request.get('invalidated')
             playerdata.save_profile(
-                firstName, lastName, email, password, score, machine)
+                firstName, lastName, email, password, score, machine, invalidated)
             self.redirect('/profile-edit')
 
             if len(firstName) < 2:
@@ -115,11 +119,12 @@ class CreateUserHandler(webapp2.RequestHandler):
             values['password'] = password
             values['score'] = score
             values['machine'] = machine
+            values['invalidated'] = invalidated
             if error_text:
                 values['errormsg'] = error_text
             else:
                 playerdata.save_profile(
-                    email, firstName, lastName, email, password, score, machine)
+                    email, firstName, lastName, email, password, score, machine, invalidated)
                 values['successmsg'] = 'Everything worked out fine.'
             render_template(self, 'pinballhomepage.html', values)
 
@@ -127,19 +132,19 @@ class CreateUserHandler(webapp2.RequestHandler):
 class FakeDataHandler(webapp2.RequestHandler):
     def get(self):
         p1 = playermodels.PlayerModel(firstName="Anthony", lastName="Benitez",
-         email="tony20882@gmail.com", score=10000000, machine = 'terminator 3')
+         email="tony20882@gmail.com", score=10000000, machine='terminator 3', invalidated=False)
         p1.put()
         p2 = playermodels.PlayerModel(firstName="Langston", lastName="Luck",
-         email="langstonluck@gmail.com", score=777777, machine = 'terminator 3')
+         email="langstonluck@gmail.com", score=777777, machine='terminator 3', invalidated=False)
         p2.put()
         p3 = playermodels.PlayerModel(firstName="Benithan", lastName="Pinball",
-         email="pinballben@gmail.com", score=999999999, machine = 'terminator 3')
+         email="pinballben@gmail.com", score=999999999, machine='terminator 3', invalidated=False)
         p3.put()
         p3 = playermodels.PlayerModel(firstName="John", lastName="Homie",
-         email="johnny@gmail.com", score=888888888, machine = 'terminator 3')
+         email="johnny@gmail.com", score=888888888, machine='terminator 3', invalidated=False)
         p3.put()
         p4 = playermodels.PlayerModel(firstName="Dude", lastName="Homie",
-         email="dude@gmail.com", score=75, machine = 'game of thrones')
+         email="dude@gmail.com", score=75, machine='game of thrones', invalidated=False)
         p4.put()
         self.response.out.write('successfully seeded data!')
 

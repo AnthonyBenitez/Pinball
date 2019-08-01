@@ -7,3 +7,4 @@ class PlayerModel(ndb.Model):
     email = ndb.StringProperty()
     score = ndb.IntegerProperty()
     machine = ndb.StringProperty()
+    invalidated = ndb.BooleanProperty()

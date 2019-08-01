@@ -11,11 +11,12 @@ def save_profile(first, last, email, password, retypePassword, score, machine):
         p.retypePassword = retypePassword
         p.score = 0
         p.machine = machine
+        p.invalidated = False
 
     if not p:
         p = PlayerModel(
             firstName=first, lastName=last, email=email, password=password,
-            retypePassword=retypePassword, score=0, machine=machine)
+            retypePassword=retypePassword, score=0, machine=machine, invalidated=False)
     p.put()
 
 
@@ -32,7 +33,7 @@ def load_user_profile(email):
     users = q.fetch(1)
     for profile in users:
         return profile
-    return PlayerModel(firstName="", lastName="", email="", score=0, machine='')
+    return PlayerModel(firstName="", lastName="", email="", score=0, machine='', invalidated=False)
 
 
 def ranking(top, machine):
