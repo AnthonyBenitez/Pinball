@@ -1,5 +1,4 @@
 import bracket as br
-import sqlite3
 import sys
 import copy
 import os

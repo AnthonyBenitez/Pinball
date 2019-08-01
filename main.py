@@ -4,7 +4,7 @@ import playermodels
 import playerdata
 # import bracketMain
 # import bracket
-# import BracketMaker
+# from bracketmodel import BracketModel
 
 from google.appengine.api import users
 from google.appengine.ext.webapp import template

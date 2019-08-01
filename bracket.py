@@ -2,12 +2,13 @@ import random
 import math
 import sys
 import copy
-import os
+# import os
 
 
 class Bracket:
     def __init__(self, teams):
-        self.numTeams = len(teams)
+        self.numTeams = 1
+        # self.numTeams = len(teams)
         self.teams = list(teams)
         self.maxScore = len(max(["Round "]+teams, key=len))
         self.numRounds = int(math.ceil(math.log(self.numTeams, 2)) + 1)
@@ -50,38 +51,39 @@ class Bracket:
         self.temp = copy.deepcopy(self.rounds)
         self.tempLineup = list(self.lineup)
         sys.stdout.write("Seed ")
-        for i in range(1,self.numRounds+1):
+        for i in range(1, self.numRounds+1):
             sys.stdout.write(("Round "+str(i)).rjust(self.maxScore+3))
         print ""
-        self.recurse(self.numRounds-1,0)
+        self.recurse(self.numRounds-1, 0)
 
-    def recurse(self,num,tail):
-        if num==0:
-            self.count+=1
-            if tail==-1:
+    def recurse(self, num, tail):
+        if num == 0:
+            self.count += 1
+            if tail == -1:
                 print str(self.tempLineup.pop(0)).rjust(4)+self.temp[0].pop(0).rjust(self.maxScore+3)+" \\"
-            elif tail==1:
+            elif tail == 1:
                 print str(self.tempLineup.pop(0)).rjust(4)+self.temp[0].pop(0).rjust(self.maxScore+3)+" /"
         else:
-            self.recurse(num-1,-1)
-            if tail==-1:
-                print "".rjust(4)+"".rjust((self.maxScore+3)*num)+self.temp[num].pop(0).rjust(self.maxScore+3)+" \\"
-            elif tail==1:
+            self.recurse(num-1, -1)
+            if tail == -1:
+                print "".rjust(4)+"".rjust((
+                    self.maxScore+3)*num)+self.temp[num].pop(0).rjust(self.maxScore+3)+" \\"
+            elif tail == 1:
                 print "".rjust(4)+"".rjust((self.maxScore+3)*num)+self.temp[num].pop(0).rjust(self.maxScore+3)+" /"
             else:
                 print "".rjust(4)+"".rjust((self.maxScore+3)*num)+self.temp[num].pop(0).rjust(self.maxScore+3)
-            self.recurse(num-1,1)
+            self.recurse(num-1, 1)
 
     def addTeams(self):
         x = self.numTeams
         teams = [1]
         temp = []
-        count=0
-        for i in range(2,x+1):
+        count = 0
+        for i in range(2, x+1):
             temp.append(i)
-        for i in range(0, int(2**math.ceil(math.log(x,2))-x)):
+        for i in range(0, int(2**math.ceil(math.log(x, 2))-x)):
             temp.append("-"*self.maxScore)
-        for _ in range(0, int(math.ceil(math.log(x,2)))):
+        for _ in range(0, int(math.ceil(math.log(x, 2)))):
             high = max(teams)
             for i in range(0, len(teams)):
                 index = teams.index(high)+1
@@ -92,14 +94,14 @@ class Bracket:
 
 
 def getNumTeams():
-    print "How many teams?",
-    numTeams = raw_input()
+    print "How many players?",
+    numTeams = 2
     try:
         x = int(numTeams)
-        if x>1:
+        if x > 1:
             return x
         else:
-            print "Must be atleast two teams"
+            print "Must be at least two players"
             return getNumTeams()
     except:
         return getNumTeams()
@@ -109,36 +111,24 @@ def getTeamNames(numTeams):
     teams = []
     for i in range(0, numTeams):
         correct = False
-        while not correct:
-            print "Name of team "+str(i+1)+"?",
-            name = raw_input()
-            if name not in [""," ","Quit","quit","Q","q"]:
-                teams.append(name)
-                correct = True
+        """while not correct:
+            print "Name of player "+str(i+1)+"?",
+            teams.append(name)
+            correct = True"""
     return teams
 
 
 def run():
-    os.system('cls' if os.name == 'nt' else 'clear')
     numTeams = getNumTeams()
     teams = getTeamNames(numTeams)
     bracket = Bracket(teams)
-    print "Shuffle the teams? "
-    if raw_input() in ["Yes", "Y", "yes", "y", "Yeah", "yeah"]:
-        bracket.shuffle()
-    os.system('cls' if os.name == 'nt' else 'clear')
+    bracket.shuffle()
     bracket.show()
     for i in range(2, bracket.numRounds+1):
         updated = False
         while not updated:
-            print ""
-            print "Type Q to quit and save."
-            sys.stdout.write("Update round "+str(i)+": ")
-            teams = raw_input().replace(", ", ",").split(",")
-            if teams[0] in ["Q", "q", "Quit", "quit"]:
-                return
+            teams = []
             updated = bracket.update(i, teams)
-            os.system('cls' if os.name == 'nt' else 'clear')
             bracket.show()
     print ""
     print bracket.rounds[-1][0]+" won!"
