@@ -2,6 +2,7 @@ from google.appengine.ext import ndb
 
 
 class BracketModel(ndb.Model):
+    name = ndb.StringProperty()
     numTeams = ndb.IntegerProperty()
     teams = ndb.StringProperty()
     maxScore = ndb.IntegerProperty()

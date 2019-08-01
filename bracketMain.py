@@ -3,22 +3,16 @@ import sqlite3
 import sys
 import copy
 import os
+from bracketmodel import BracketModel
 
 
-def newBracket():
-
-    print "Enter name of bracket:",
-    name = raw_input()
-    if name.endswith(".db"):
-        name = name[:-3]
-    c.execute("CREATE TABLE bracket (round INT)")
+def newBracket(numTeams, teams, maxScore, numRounds, totalNumTeams, totalTeams, lineup, count, rounds, name):
+    bracket = BracketModel(numTeams, teams, maxScore, numRounds, totalNumTeams, totalTeams, lineup, count, rounds, name)
     bracket = begin()
-    createDB(bracket, conn)
     update(bracket, 2)
-    closeBracket(bracket, conn)
 
 
-def createDB(bracket, conn):
+"""def createDB(bracket, conn):
     cursor = conn.cursor()
     for i in range(1, bracket.totalNumTeams+1):
         cursor.execute("ALTER TABLE bracket ADD COLUMN team"+str(i)+" TEXT")
@@ -28,32 +22,17 @@ def createDB(bracket, conn):
             columns += "'team"+str(j)+"',"
         columns = columns[:-1]+")"
         cursor.execute("INSERT INTO bracket "+columns+" VALUES ("+str(i+1)+",'" + "','".join(bracket.rounds[i])+"')")
-    conn.commit()
+    conn.commit()"""
 
 
-def openBracket():
-    clrScreen()
-    print "Enter full path of file:",
-    path = raw_input()
-    if path.endswith(".db"):
-        path = path[:-3]
-    path += ".db"
-    try:
-        open(path).close()
-    except:
-        print "File not found"
-        return
-    conn = sqlite3.connect(path)
-    c = conn.cursor()
-    try:
-        c.execute("SELECT * FROM bracket")
-    except:
-        print "Bracket not found"
-        return
-    rows = c.fetchall()
-    teams = [x for x in list(rows[0])[1:] if x[0] != "-"]
+def openBracket(bracket):
+    if not bracket:
+        print "bracket not found"
+    q = BracketModel.query(BracketModel.name == bracket.name)
+    users = q.fetch()
+    teams = [x for x in list(users[0])[1:] if x[0] != "-"]
     temp = []
-    for row in rows:
+    for row in users:
         temp.append([str(x) for x in row if isinstance(x, unicode)])
     bracket = br.Bracket(teams)
     bracket.rounds = copy.deepcopy(temp)
@@ -63,46 +42,31 @@ def openBracket():
             Round = i+1
             break
     update(bracket, Round)
-    closeBracket(bracket, conn)
 
 
 def begin():
-    clrScreen()
     numTeams = br.getNumTeams()
     teams = br.getTeamNames(numTeams)
     bracket = br.Bracket(teams)
-    print "Shuffle the teams?",
-    if raw_input() in ["Yes", "Y", "yes", "y", "Yeah", "yeah", "1"]:
-        bracket.shuffle()
+    bracket.shuffle()
     return bracket
 
 
 def update(bracket, Round):
     updated = False
     while not updated:
-        clrScreen()
         bracket.show()
-        print ""
-        print "Type Q to quit and save."
-        print "Update round "+str(Round)+":",
-        teams = raw_input().replace(", ", ",").split(",")
-        if teams[0] in ["Q", "q", "Quit", "quit"]:
-            return
+        teams = []  # html form for update bracket teams
         updated = bracket.update(Round, teams)
     if Round == bracket.numRounds:
-        clrScreen()
         bracket.show()
-        print ""
-        print bracket.rounds[-1][0]+" won!"
-        print ""
-        print "Press enter to go to main menu."
-        raw_input()
+        # html show win results
     else:
         update(bracket, Round+1)
+        # html show next round results
 
 
-def saveBracket(bracket, conn):
-    cursor = conn.cursor()
+"""def saveBracket(bracket, conn):
     for i in range(0, bracket.numRounds):
         keys = []
         for j in range(1, len(bracket.rounds[i])+1):
@@ -114,3 +78,4 @@ def saveBracket(bracket, conn):
 
 def closeBracket(bracket, conn):
     saveBracket(bracket, conn)
+"""
