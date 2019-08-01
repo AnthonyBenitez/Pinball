@@ -73,7 +73,7 @@ def openBracket():
     bracket.rounds = copy.deepcopy(temp)
     Round = bracket.numRounds
     for i in range(1, bracket.numRounds+1):
-        if "-"*bracket.max in bracket.rounds[i]:
+        if "-"*bracket.maxScore in bracket.rounds[i]:
             Round = i+1
             break
     update(bracket, Round)
