@@ -15,6 +15,7 @@ body {
     border-left-width: 10px;
     margin-top: 10px;
     align-items: center;
+    font-size: 50%;
 }
 .container {
   display: inline-block;
