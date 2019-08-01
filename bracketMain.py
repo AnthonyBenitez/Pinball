@@ -107,43 +107,10 @@ def saveBracket(bracket, conn):
         keys = []
         for j in range(1, len(bracket.rounds[i])+1):
             keys.append("team"+str(j))
-        sql = ('UPDATE bracket SET '+','.join(key+' = ?' for key in keys)+' WHERE round = ?')
+        results = ('UPDATE bracket SET '+','.join(key+' = ?' for key in keys)+' WHERE round = ?')
         args = bracket.rounds[i]+[i+1]
-        cursor.execute(sql, args)
-    conn.commit()
+        return results
 
 
 def closeBracket(bracket, conn):
     saveBracket(bracket, conn)
-    conn.close()
-
-
-def mainMenu():
-    clrScreen()
-    print "1. New bracket"
-    print "2. Open bracket"
-    print "3. Quit"
-    print ""
-    print "Enter number:",
-    try:
-        ans = int(raw_input())
-    except:
-        mainMenu()
-        return
-    if ans == 1:
-        newBracket()
-    elif ans == 2:
-        openBracket()
-    else:
-        clrScreen()
-        sys.exit()
-    mainMenu()
-
-
-if "-f" in sys.argv:
-    def clrScreen():
-        pass
-else:
-    def clrScreen():
-        os.system('cls' if os.name == 'nt' else 'clear')
-mainMenu()
