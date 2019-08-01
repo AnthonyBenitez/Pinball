@@ -6,6 +6,7 @@ body {
   font-family: 'Rubik', sans-serif;
   display: flex;
   flex-direction: column;
+  font-size:50px;
 }
 
 #container2 {
@@ -15,6 +16,9 @@ body {
     border-left-width: 10px;
     margin-top: 10px;
     align-items: center;
+}
+.name{
+      font-size: 100px;
 }
 .container {
   display: inline-block;
@@ -41,3 +45,4 @@ body {
   -webkit-transform: rotate(45deg) translate(-8px, -8px);
   transform: rotate(45deg) translate(-8px, -8px);
 }
+
