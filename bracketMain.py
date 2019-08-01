@@ -1,30 +1,16 @@
 import bracket as br
 import sqlite3
-import sys, copy, os
+import sys
+import copy
+import os
 
 
 def newBracket():
-    clrScreen()
+
     print "Enter name of bracket:",
     name = raw_input()
     if name.endswith(".db"):
         name = name[:-3]
-    print "Enter full path of where the bracket will be saved:",
-    path = raw_input()
-    if path.endswith("/") or path.endswith("\\"):
-        path = path[:-1]
-    fullPath = path+"/"+name+".db"
-    try:
-        open(fullPath, "w+").close()
-    except:
-        print "Cannot create file"
-        return
-    try:
-        conn = sqlite3.connect(fullPath)
-    except:
-        print "Unable to open database file"
-        return
-    c = conn.cursor()
     c.execute("CREATE TABLE bracket (round INT)")
     bracket = begin()
     createDB(bracket, conn)

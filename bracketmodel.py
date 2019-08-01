@@ -10,4 +10,4 @@ class BracketModel(ndb.Model):
     totalTeams = ndb.IntegerProperty()
     lineup = ndb.StringProperty()
     count = ndb.IntegerProperty()
-    rounds = ndb.
+    rounds = ndb.StringProperty(repeated=True)
