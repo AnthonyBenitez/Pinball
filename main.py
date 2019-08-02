@@ -146,8 +146,12 @@ class FakeDataHandler(webapp2.RequestHandler):
         p4 = playermodels.PlayerModel(firstName="Dude", lastName="Homie",
          email="dude@gmail.com", score=75, machine='game of thrones', invalidated=False)
         p4.put()
-        self.response.out.write('successfully seeded data!')
+        self.response.out.write('Successfully seeded data!')
 
+
+class InvalidationHandler(webapp2.RequestHandler):
+    def post(self):
+        self.response.out.write('Suggestion has been sent!')
 
 app = webapp2.WSGIApplication([
     ('/p/(.*)', CreateUserHandler),
@@ -155,5 +159,6 @@ app = webapp2.WSGIApplication([
     ('/adamleaderboard', adamLeaderboardHandler),
     ('/gotleaderboard', gotLeaderboardHandler),
     ('/fake', FakeDataHandler),
+    ('/invalidate', InvalidationHandler)
     ('.*', MainHandler)
 ])
