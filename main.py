@@ -153,13 +153,13 @@ class FakeDataHandler(webapp2.RequestHandler):
          email="langstonluck@gmail.com", score=78294900, machine='game of thrones', invalidated=False)
         p7.put()
         p8 = playermodels.PlayerModel(firstName="Tim", lastName="James",
-         email="pinballben@gmail.com", score=999999999, machine=' 3', invalidated=False)
+         email="timjames@gmail.com", score=83592700, machine='game of thrones', invalidated=False)
         p8.put()
-        p9 = playermodels.PlayerModel(firstName="Steven", lastName="Homie",
-         email="johnny@gmail.com", score=888888888, machine='terminator 3', invalidated=False)
+        p9 = playermodels.PlayerModel(firstName="Steve", lastName="Pinball",
+         email="stevenpinball@gmail.com", score=50234780, machine='game of thrones', invalidated=False)
         p9.put()
-        p10 = playermodels.PlayerModel(firstName="Stephen", lastName="Homie",
-         email="dude@gmail.com", score=75, machine='game of thrones', invalidated=False)
+        p10 = playermodels.PlayerModel(firstName="Francisco", lastName="Pinball",
+         email="Francisco@gmail.com", score=63673100, machine='game of thrones', invalidated=False)
         p10.put()
         p11 = playermodels.PlayerModel(firstName="Anthony", lastName="Benitez",
          email="tony20882@gmail.com", score=10000000, machine='addams', invalidated=False)
