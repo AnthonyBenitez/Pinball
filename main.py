@@ -137,21 +137,45 @@ class FakeDataHandler(webapp2.RequestHandler):
         p2 = playermodels.PlayerModel(firstName="Langston", lastName="Luck",
          email="langstonluck@gmail.com", score=777777, machine='terminator 3', invalidated=False)
         p2.put()
-        p3 = playermodels.PlayerModel(firstName="Benithan", lastName="Pinball",
+        p3 = playermodels.PlayerModel(firstName="Beni", lastName="Pinball",
          email="pinballben@gmail.com", score=999999999, machine='terminator 3', invalidated=False)
         p3.put()
-        p3 = playermodels.PlayerModel(firstName="John", lastName="Homie",
+        p4 = playermodels.PlayerModel(firstName="John", lastName="Homie",
          email="johnny@gmail.com", score=888888888, machine='terminator 3', invalidated=False)
-        p3.put()
-        p4 = playermodels.PlayerModel(firstName="Dude", lastName="Homie",
-         email="dude@gmail.com", score=75, machine='game of thrones', invalidated=False)
         p4.put()
+        p5 = playermodels.PlayerModel(firstName="Isa", lastName="Bel",
+         email="dude@gmail.com", score=75, machine='game of thrones', invalidated=False)
+        p5.put()
+        p6 = playermodels.PlayerModel(firstName="Anthony", lastName="Benitez",
+         email="tony20882@gmail.com", score=10000000, machine='addams', invalidated=False)
+        p6.put()
+        p7 = playermodels.PlayerModel(firstName="Langston", lastName="Luck",
+         email="langstonluck@gmail.com", score=777777, machine='terminator 3', invalidated=False)
+        p7.put()
+        p8 = playermodels.PlayerModel(firstName="Jon", lastName="Pinball",
+         email="pinballben@gmail.com", score=999999999, machine='terminator 3', invalidated=False)
+        p8.put()
+        p9 = playermodels.PlayerModel(firstName="Steven", lastName="Homie",
+         email="johnny@gmail.com", score=888888888, machine='terminator 3', invalidated=False)
+        p9.put()
+        p10 = playermodels.PlayerModel(firstName="Stephen", lastName="Homie",
+         email="dude@gmail.com", score=75, machine='game of thrones', invalidated=False)
+        p10.put()
         self.response.out.write('Successfully seeded data!')
 
 
 class InvalidationHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.out.write('Suggestion has been sent!')
+        values = get_template_parameters()
+        if get_user_email():
+            profile = playerdata.load_user_profile(get_user_email())
+            values['firstName'] = profile.firstName
+            values['ranking'] = playerdata.ranking(10, 'game of thrones')
+            values['score'] = profile.score
+            values['machine'] = profile.machine
+            values['invalidated'] = profile.invalidated
+        render_template(self, 'invalidatescore.html', values)
+        # self.response.out.write('Suggestion has been sent!')
 
 app = webapp2.WSGIApplication([
     ('/p/(.*)', CreateUserHandler),
