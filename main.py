@@ -150,7 +150,7 @@ class FakeDataHandler(webapp2.RequestHandler):
 
 
 class InvalidationHandler(webapp2.RequestHandler):
-    def post(self):
+    def get(self):
         self.response.out.write('Suggestion has been sent!')
 
 app = webapp2.WSGIApplication([
@@ -159,6 +159,6 @@ app = webapp2.WSGIApplication([
     ('/adamleaderboard', adamLeaderboardHandler),
     ('/gotleaderboard', gotLeaderboardHandler),
     ('/fake', FakeDataHandler),
-    ('/invalidate', InvalidationHandler)
+    ('/invalidate', InvalidationHandler),
     ('.*', MainHandler)
 ])

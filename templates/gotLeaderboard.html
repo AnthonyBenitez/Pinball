@@ -2,6 +2,38 @@
     <head> 
         <link rel="stylesheet" href="/i/gotLeaderboard.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+           <style>
+            ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            }
+
+          /*  li {
+            float: left;
+            } */
+
+            li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            float: left;
+            }
+
+            li a:hover {
+            background-color: #111;
+            }
+            </style>
+        <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="/termleaderboard">Leaderboards</a></li>
+        <li><a href="/p/(.*)">Compete</a></li>
+        <li><a href="/invalidate">Report a User</a></li>
+        </ul>
     </head>
     <body>
           <div class="navbar">
