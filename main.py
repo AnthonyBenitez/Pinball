@@ -162,19 +162,19 @@ class FakeDataHandler(webapp2.RequestHandler):
          email="Francisco@gmail.com", score=63673100, machine='game of thrones', invalidated=False)
         p10.put()
         p11 = playermodels.PlayerModel(firstName="Anthony", lastName="Benitez",
-         email="tony20882@gmail.com", score=10000000, machine='addams', invalidated=False)
+         email="tony20882@gmail.com", score=13405000, machine='addams', invalidated=False)
         p11.put()
         p12 = playermodels.PlayerModel(firstName="Langston", lastName="Luck",
-         email="langstonluck@gmail.com", score=777777, machine='terminator 3', invalidated=False)
+         email="langstonluck@gmail.com", score=7723567, machine='addams', invalidated=False)
         p12.put()
         p13 = playermodels.PlayerModel(firstName="Jon", lastName="Pinball",
-         email="pinballben@gmail.com", score=999999999, machine='terminator 3', invalidated=False)
+         email="pinballben@gmail.com", score=4592311, machine='addams', invalidated=False)
         p13.put()
         p14 = playermodels.PlayerModel(firstName="Steven", lastName="Homie",
-         email="johnny@gmail.com", score=888888888, machine='terminator 3', invalidated=False)
+         email="johnny@gmail.com", score=56992359, machine='addams', invalidated=False)
         p14.put()
-        p15 = playermodels.PlayerModel(firstName="Stephen", lastName="Homie",
-         email="dude@gmail.com", score=75, machine='game of thrones', invalidated=False)
+        p15 = playermodels.PlayerModel(firstName="Jeff", lastName="Homie",
+         email="dude@gmail.com", score=74591305, machine='adams', invalidated=False)
         p15.put()
         self.response.out.write('Successfully seeded data!')
 
